@@ -18,7 +18,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         NSAttributedString.Key.strokeColor: UIColor.black,
         NSAttributedString.Key.foregroundColor: UIColor.white,
         NSAttributedString.Key.font: UIFont(name: "HelveticaNeue-CondensedBlack", size: 40)!,
-        NSAttributedString.Key.strokeWidth:  2
+        NSAttributedString.Key.strokeWidth:  -2
     ]
     
 //    let activityinstance : UIActivityViewController
@@ -26,15 +26,20 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        topTF.defaultTextAttributes    = memeTextAttributes
-        bottomTF.defaultTextAttributes = memeTextAttributes
-        topTF.textAlignment = .center
-        bottomTF.textAlignment = .center
+        
+        setupTextField(topTF, text: "TOP")
+        setupTextField(bottomTF, text: "BOTTOM")
         
         navigationController?.setNavigationBarHidden(navigationController?.isNavigationBarHidden == false, animated: true)
         
         
 
+    }
+    
+    func setupTextField(_ textField: UITextField, text: String) {
+        textField.defaultTextAttributes = memeTextAttributes
+        textField.textAlignment = .center
+        textField.text = text
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -49,29 +54,38 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
     
     @IBAction func captureImage(_ sender: Any) {
-        let imagePicker = UIImagePickerController()
-        imagePicker.delegate = self
-        imagePicker.sourceType = .camera
-        present(imagePicker, animated: true, completion: nil)
+        presentPickerViewController(source: .camera)
     }
     
     @IBAction func pickImage(_ sender: Any) {
+        presentPickerViewController(source: .photoLibrary)
+    }
+    
+    func presentPickerViewController(source: UIImagePickerController.SourceType) {
         let imagePicker = UIImagePickerController()
-                imagePicker.delegate = self
-                imagePicker.sourceType = .photoLibrary
-                present(imagePicker, animated: true, completion: nil)
+        imagePicker.delegate = self
+        imagePicker.sourceType = source
+        present(imagePicker, animated: true, completion: nil)
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        
         if let image = info[.originalImage] as? UIImage {
             imageViewPicker.image = image
             dismiss(animated: true, completion: nil)
                 }
+//        activityinstance.completionWithItemsHandler = {
+//        (activity, completed, items, error) in
+//        if completed {
+//        self.save()
+//        }
+//        }
     }
     
     @objc func keyboardWillShow(_ notification:Notification) {
-
-        view.frame.origin.y -= getKeyboardHeight(notification)
+        if bottomTF.isFirstResponder{
+            view.frame.origin.y = -getKeyboardHeight(notification)
+        }
     }
     
     @objc func keyboardWillHide(_ notification:Notification) {
