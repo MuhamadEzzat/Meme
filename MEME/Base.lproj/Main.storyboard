@@ -74,6 +74,8 @@
                         <outlet property="camerButton" destination="To4-PO-UkS" id="7eh-gG-r0a"/>
                         <outlet property="imageViewPicker" destination="Ybq-C6-Kgv" id="gKD-iO-tyr"/>
                         <outlet property="libraryButton" destination="lqW-w0-66P" id="Zts-Ms-F3l"/>
+                        <outlet property="mytoolbar" destination="mBV-iB-cbk" id="7ek-jU-QWe"/>
+                        <outlet property="navbaar" destination="Wwr-T8-fQT" id="bn3-nn-6xo"/>
                         <outlet property="topTF" destination="PUj-Ea-2Ym" id="2eU-Kn-QMq"/>
                     </connections>
                 </viewController>
