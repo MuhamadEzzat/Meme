@@ -25,7 +25,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     let items = [UIImage]()
     
-    
+    var memedImage = UIImage()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -82,7 +82,6 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         activityinstance.completionWithItemsHandler = {
             (activity, completed, items, error) in
             if completed {
-                self.generateMemedImage()
                 self.save()
                 print("SAVE")
             }
@@ -135,6 +134,8 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         self.imageViewPicker.image = memedImage
         // TODO: Show toolbar and navbar
         self.hideAndShowBars(navbar: self.navigationController!.navigationBar, toolbar: mytoolbar, hide: false)
+        
+        self.memedImage = memedImage
 
         return memedImage
     }
@@ -146,7 +147,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     func save() {
             // Create the meme
-//            let meme = Meme(topText: topTextField.text!, bottomText: bottomTextField.text!, originalImage: imageView.image!, memedImage: memedImage)
+            let meme = Meme(topText: topTF.text!, bottomText: bottomTF.text!, originalImage: imageViewPicker.image!, memedImage: memedImage)
     }
 
 }
